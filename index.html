@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next-Gen Time Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for live data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Particle Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="stopwatch-container">
+        <button id="fullscreenBtn" class="icon-btn" title="Toggle Fullscreen">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+
+        <div class="stopwatch-card">
+            <div class="header">
+                <h1 class="title">NXT-GEN TIMER</h1>
+                <div class="mic-status" id="micStatus" title="Voice Control Active (Say 'Start', 'Lap', 'Stop')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                    <span>Listening...</span>
+                </div>
+            </div>
+            
+            <div class="timer-wrapper">
+                <svg class="progress-ring" width="220" height="220">
+                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="100" cx="110" cy="110"/>
+                    <circle class="progress-ring__circle" stroke="url(#gradient)" stroke-width="8" fill="transparent" r="100" cx="110" cy="110" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#8b5cf6" />
+                            <stop offset="100%" stop-color="#06b6d4" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="display-container">
+                    <div class="display" id="display">00:00:00.00</div>
+                    <div class="delta-display" id="deltaDisplay">Delta: --</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" id="startBtn">Start</button>
+                <button class="btn btn-secondary" id="pauseBtn" disabled>Pause</button>
+                <button class="btn btn-tertiary" id="lapBtn" disabled>Lap</button>
+                <button class="btn btn-danger" id="resetBtn">Reset</button>
+            </div>
+            
+            <div class="dashboard-grid">
+                <!-- Analytics Panel -->
+                <div class="panel laps-panel">
+                    <div class="stats-header">
+                        <div class="stat-box">
+                            <span class="stat-label">Average Lap</span>
+                            <span class="stat-value" id="avgLapTime">--:--:--.--</span>
+                        </div>
+                        <button class="btn-icon" id="exportBtn" title="Export Laps (CSV)">Export</button>
+                    </div>
+                    <div class="laps-container">
+                        <ul class="laps-list" id="lapsList"></ul>
+                    </div>
+                </div>
+                
+                <!-- Chart Panel -->
+                <div class="panel chart-panel">
+                    <canvas id="lapChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="hints">
+                Voice: <em>"Start"</em>, <em>"Stop"</em>, <em>"Lap"</em>, <em>"Reset"</em> | Keys: <kbd>Space</kbd> <kbd>Enter</kbd>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
